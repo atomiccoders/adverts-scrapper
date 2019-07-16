@@ -4,7 +4,8 @@
   "description": "scrapper script looking for advertisments on the web",
   "main": "scraper.js",
   "scripts": {
-    "start": "node scraper.js"
+    "start": "node scraper.js",
+    "start-recursive": "node recursive-scraper.js"
   },
   "author": "KubekTKD",
   "license": "MIT",
