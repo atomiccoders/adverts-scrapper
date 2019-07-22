@@ -14,6 +14,7 @@ const puppeteer = require("puppeteer");
       let searchParam = document.querySelector('input#search-text').value;
       if (searchParam !== 'Szukaj...')
         return Array.from(document.querySelectorAll("td.offer:not(.promoted) table")).map(offer => ({
+          id: offer.getAttribute('data-id'),
           title: offer.querySelector("h3 a strong").innerText.trim(),
           logo: offer.querySelector("a.thumb img") !== null ? offer.querySelector("a.thumb img").src : '',
           link: offer.querySelector("h3 a").href,
