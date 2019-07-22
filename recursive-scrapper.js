@@ -1,3 +1,4 @@
+const { sendTest, sendMessage } = require("./sms-api");
 const puppeteer = require("puppeteer");
 
 (async () => {
@@ -12,10 +13,13 @@ const puppeteer = require("puppeteer");
     const itemsOnPage = await page.evaluate(() => {
       let searchParam = document.querySelector('input#search-text').value;
       if (searchParam !== 'Szukaj...')
-        return Array.from(document.querySelectorAll("td.offer:not(.promoted) table")).map(compact => ({
-          title: compact.querySelector("h3 a strong").innerText.trim(),
-          logo: compact.querySelector("a.thumb img") !== null ? compact.querySelector("a.thumb img").src : '',
-          link: compact.querySelector("h3 a").href
+        return Array.from(document.querySelectorAll("td.offer:not(.promoted) table")).map(offer => ({
+          title: offer.querySelector("h3 a strong").innerText.trim(),
+          logo: offer.querySelector("a.thumb img") !== null ? offer.querySelector("a.thumb img").src : '',
+          link: offer.querySelector("h3 a").href,
+          price: offer.querySelector('p.price strong') ? offer.querySelector('p.price strong').innerText : 'brak',
+          localization: offer.querySelector('.bottom-cell small:first-child span').innerText,
+          date: offer.querySelector('.bottom-cell small:last-child span').innerText
         }))
       else 
         return [];
@@ -50,7 +54,17 @@ const puppeteer = require("puppeteer");
   const items = await extractItems(firstUrl);
 
   // Todo: Update database with items
-  console.log(items.length, items[items.length-1]);
+  console.log(items.length, items[items.length - 1]);
+  
+  const newAds = items.length;
+  const message = {
+		from: "Scrapper",
+		to: "883543667",
+		text: `There are ${newAds} new ads found. A message with details has been sent to your email.`
+	};
+
+  sendTest(message);
+  // sendMessage(message);
 
   await browser.close();
 })();
