@@ -21,11 +21,12 @@ exports.sendMessage = function sendMessage(msg) {
     .from(msg.from) // "Info"
     .to(msg.to) // "883543667"
     .message(msg.text)
+    .normalize() // replace polish letters
     .execute(); // return Promise
 }
 
 function displayResult(result) {
-  console.log(result);
+  console.log('smsApi info:\n', result, '\n');
 }
 
 function displayError(err) {
