@@ -10,7 +10,7 @@
   "author": "KubekTKD",
   "license": "MIT",
   "dependencies": {
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "puppeteer": "^1.18.1",
     "smsapi": "^1.7.0"
   }
